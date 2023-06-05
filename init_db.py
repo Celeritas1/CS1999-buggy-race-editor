@@ -20,14 +20,22 @@ print(f"- Opened database successfully in file \"{DATABASE_FILE}\"")
 
 connection.execute("""
 
-  CREATE TABLE IF NOT EXISTS buggies (
-    id                    INTEGER PRIMARY KEY,
-    qty_wheels            INTEGER DEFAULT 4,
-    flag_color            VARCHAR(20),
-    flag_color_secondary  VARCHAR(20),
-    flag_pattern          VARCHAR(20)
-  )
-
+CREATE TABLE IF NOT EXISTS buggies (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    qty_wheels INTEGER DEFAULT 4,
+    power_type TEXT DEFAULT 'Petrol',
+    tyres TEXT DEFAULT 'Knobbly',
+    qty_tyres INTEGER DEFAULT 4,
+    armour TEXT DEFAULT 'None',
+    attack TEXT DEFAULT 'None',
+    algo TEXT DEFAULT 'None',
+    flag_color TEXT DEFAULT 'White',
+    flag_color_sec TEXT DEFAULT 'Black',
+    flag_pattern TEXT DEFAULT 'Plain',
+    special TEXT,
+    total_cost INTEGER DEFAULT 0,
+    valid_check BOOLEAN DEFAULT FALSE
+);
 """)
 
 print("- OK, table \"buggies\" exists")
