@@ -134,9 +134,24 @@
     <input type="submit" class="button">
   </form>
 
+    {% if buggy_data %}
+    <h2>Generated Buggy Data:</h2>
+    <ul>
+      {% for key, value in buggy_data.items() %}
+      <li>{{ key }}: {{ value }}</li>
+      {% endfor %}
+    </ul>
+    {% endif %}
+
+    {% if total_cost %}
+    <h2>Total Cost: {{ total_cost }}</h2>
+    {% endif %}
 
   <p>
     <a href="/" class="button">Home</a>
+  </p>
+  <p>
+    <a href="/random" class="button">Generate a Random Buggy</a>
   </p>
 
 {% endblock %}
