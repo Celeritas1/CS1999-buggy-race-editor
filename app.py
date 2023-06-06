@@ -28,7 +28,6 @@ def create_buggy():
         count = 0
         error_messages = []
 
-        if qty_wheels % 2 == 0:
             count += 1
         else:
             error_messages.append("Quantity entered for wheels must be an even value.")
@@ -37,8 +36,9 @@ def create_buggy():
             count += 1
         else:
             error_messages.append("You must choose a Power Type. 'none' is not allowed.")
-
-        if qty_tyres >= qty_wheels and qty_tyres % 2 == 0:
+            return False, error_messages
+    
+        if int(qty_tyres) >= int(qty_wheels) and int(qty_tyres) % 2 == 0:
             count += 1
         else:
             error_messages.append("Quantity entered for tyres must be equal to or greater than the number of wheels, and it must be an even value.")
@@ -59,7 +59,6 @@ def create_buggy():
 
     def calculate(qty_wheels, power_type, tyres, qty_tyres, armour, attack, algo, special, costs):
     # Calculate the total cost of the buggy based on choices selected
-        total_cost = costs.get(power_type, 0)  
         total_cost += costs.get(tyres, 0)  
         total_cost += costs.get(armour, 0)  
         total_cost += costs.get(attack, 0)  
@@ -71,6 +70,7 @@ def create_buggy():
 
         return total_cost
    
+
     if request.method == 'GET':
         return render_template("buggy-form.html")
     elif request.method == 'POST':
@@ -125,12 +125,14 @@ def create_buggy():
         cursor.execute("SELECT valid_check FROM buggies WHERE id = ?", (DEFAULT_BUGGY_ID,))
         boolean_check = cursor.fetchone()[0]
 
-        check = rules(qty_wheels, power_type, qty_tyres, flag_color, flag_color_sec, flag_pattern)
-        valid_check = boolean_check or check
+        check, error_messages = rules(qty_wheels, power_type, qty_tyres, flag_color, flag_color_sec, flag_pattern)
+        valid_check = bool(boolean_check or check)
 
-        total_cost = calculate(
-            qty_wheels, power_type, tyres, qty_tyres, armour, attack, algo, special, costs
-        )
+        if not check:
+            msg = " ".join(error_messages)
+            return render_template("buggy-form.html", error_messages=error_messages)
+
+        total_cost = calculate(qty_wheels, power_type, tyres, qty_tyres, armour, attack, algo, special, costs)
 
         if not qty_wheels.isdigit():
             msg = "Quantity of wheels must be an integer"
@@ -163,12 +165,14 @@ def create_buggy():
 
                 con.commit()
                 msg = "Record successfully saved"
-        except:
+        except Exception as e:
             con.rollback()
-            msg = "Error in update operation"
+            msg = "Error in update operation: " + str(e)
         finally:
             con.close()
+
         return render_template("updated.html", msg=msg)
+
 
 
 
