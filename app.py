@@ -28,48 +28,52 @@ def create_buggy():
         count = 0
         error_messages = []
 
-            count += 1
-        else:
+        # Check if qty_wheels and qty_tyres have values
+        if not qty_wheels:
+            error_messages.append("Quantity of wheels is required.")
+        if not qty_tyres:
+            error_messages.append("Quantity of tyres is required.")
+
+        # Check if qty_wheels is even and an integer
+        if qty_wheels and not qty_wheels.isdigit():
+            error_messages.append("Quantity of wheels must be an integer.")
+        elif qty_wheels and int(qty_wheels) % 2 != 0:
             error_messages.append("Quantity entered for wheels must be an even value.")
 
-        if power_type != 'none':
-            count += 1
-        else:
-            error_messages.append("You must choose a Power Type. 'none' is not allowed.")
-            return False, error_messages
-    
-        if int(qty_tyres) >= int(qty_wheels) and int(qty_tyres) % 2 == 0:
-            count += 1
-        else:
-            error_messages.append("Quantity entered for tyres must be equal to or greater than the number of wheels, and it must be an even value.")
+        # Check if qty_tyres is an integer
+        if qty_tyres and not qty_tyres.isdigit():
+            error_messages.append("Quantity of tyres must be an integer.")
 
-        if flag_color != flag_color_sec:
-            count += 1
-        else:
+        # Check if power_type is selected
+        if power_type == 'none':
+            error_messages.append("You must choose a Power Type. 'none' is not allowed.")
+
+        # Check if flag_color and flag_color_sec are different
+        if flag_color == flag_color_sec:
             error_messages.append("Colors selected must be different from each other.")
 
-        if flag_pattern != 'plain':
-            if flag_color != flag_color_sec:
-                count += 1
-            else:
-                error_messages.append("Only the primary color is saved when 'plain' is selected for flag pattern.")
+        # Handle 'plain' flag_pattern selection
+        if flag_pattern == 'plain':
+            flag_color_sec = 'none'
 
-        return count == 5, error_messages
+        if not error_messages:
+            count = 6  # All checks passed
+
+        return count, error_messages, qty_wheels, qty_tyres, flag_color, flag_color_sec
 
 
-    def calculate(qty_wheels, power_type, tyres, qty_tyres, armour, attack, algo, special, costs):
-    # Calculate the total cost of the buggy based on choices selected
-        total_cost += costs.get(tyres, 0)  
-        total_cost += costs.get(armour, 0)  
-        total_cost += costs.get(attack, 0)  
-        total_cost += costs.get(algo, 0)  
-        total_cost += costs.get(special, 0)  
-    # Multiply the total cost by choices where an integer is involved
+    def calculate(qty_wheels, power_type, tyres, armour, attack, algo, special, costs):       
+        # Calculate the total cost of the buggy based on choices selected
+        total_cost = costs.get(power_type, 0)
+        total_cost += costs.get(tyres, 0)
+        total_cost += costs.get(armour, 0)
+        total_cost += costs.get(attack, 0)
+        total_cost += costs.get(algo, 0)
+        total_cost += costs.get(special, 0)
+        # Multiply the total cost by choices where an integer is involved
         total_cost *= int(qty_wheels)
-        total_cost *= int(qty_tyres)
 
         return total_cost
-   
 
     if request.method == 'GET':
         return render_template("buggy-form.html")
@@ -118,28 +122,24 @@ def create_buggy():
             'fireproof': 70,
             'hamster_booster': 5,
             'insulated': 100
-        }
-        
+            }
+
         connection = sql.connect(DATABASE_FILE)
         cursor = connection.cursor()
         cursor.execute("SELECT valid_check FROM buggies WHERE id = ?", (DEFAULT_BUGGY_ID,))
-        boolean_check = cursor.fetchone()[0]
+        row = cursor.fetchone()
+        boolean_check = row[0] if row is not None else False
+        count, error_messages, qty_wheels, qty_tyres, flag_color, flag_color_sec = rules(
+            qty_wheels, power_type, qty_tyres, flag_color, flag_color_sec, flag_pattern
+        )
+        valid_check = bool(boolean_check or count == 6)
 
-        check, error_messages = rules(qty_wheels, power_type, qty_tyres, flag_color, flag_color_sec, flag_pattern)
-        valid_check = bool(boolean_check or check)
-
-        if not check:
+        if error_messages:
             msg = " ".join(error_messages)
-            return render_template("buggy-form.html", error_messages=error_messages)
+            return render_template("buggy-form.html", error_messages=error_messages, msg=msg)
 
-        total_cost = calculate(qty_wheels, power_type, tyres, qty_tyres, armour, attack, algo, special, costs)
+        total_cost = calculate(qty_wheels, power_type, tyres, armour, attack, algo, special, costs)
 
-        if not qty_wheels.isdigit():
-            msg = "Quantity of wheels must be an integer"
-            return render_template("buggy-form.html", msg=msg)
-        if not qty_tyres.isdigit():
-            msg = "Quantity of tyres must be an integer"
-            return render_template("buggy-form.html", msg=msg)
         try:
             with sql.connect(DATABASE_FILE) as con:
                 cur = con.cursor()
@@ -172,6 +172,9 @@ def create_buggy():
             con.close()
 
         return render_template("updated.html", msg=msg)
+
+    return "Invalid request method"
+
 
 
 
