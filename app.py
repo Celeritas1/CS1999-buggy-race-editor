@@ -15,6 +15,10 @@ BUGGY_RACE_SERVER_URL = "https://rhul.buggyrace.net"
 #------------------------------------------------------------
 # the index page
 #------------------------------------------------------------
+@app.route('/poster')
+def poster():
+  return render_template('poster.html')
+
 @app.route('/')
 def home():
     return render_template('index.html', server_url=BUGGY_RACE_SERVER_URL)
