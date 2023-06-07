@@ -2,30 +2,37 @@
 
 {% block content %}
 
+<style>
+  .main-content {
+    color: rgb(255, 255, 255);
+    background-color: black;
+  }
+
+  .button {
+    background-color: rgb(242, 81, 181);
+    color: white;
+    transition: background-color 0.7s, color 0.7s;
+  }
+
+  .button:hover {
+    background-color: rgb(242, 81, 181);
+    color: rgb(239, 239, 239);
+    transition: background-color 0.7s, color 0.7s;
+  }
+
+  .error-messages {
+    color: red;
+  }
+</style>
+
   <h1>Make buggy</h1>
 
   <form action="/new" method="post">
     <label for="qty_wheels">Number of wheels:</label>
     <input type="text" name="qty_wheels" />
-    {% if msg %}
-    <div>
-      {% for error in msg %}
-        <div>{{ error }}</div>
-      {% endfor %}
-    </div>
-    {% endif %}
     <label for="power_type">Power Type:</label>
     <select name="power_type">
       <option value="none">None</option>
-      {% if 'Must choose a Power Type' in msg %}
-      <div>
-        {% for error in msg %}
-          {% if error == 'Must choose a Power Type. Cannot enter with \'none\'' %}
-            <div>{{ error }}</div>
-          {% endif %}
-        {% endfor %}
-      </div>
-      {% endif %}
       <option value="electric">Electric</option>
       <option value="fusion">Fusion</option>
       <option value="hamster">Hamster</option>
@@ -47,15 +54,6 @@
     </select>
     <label for="qty_tyres">Qty Tyres:</label>
     <input type="text" name="qty_tyres" />
-    {% if 'Quantity entered for tyres must be equal to or greater than' in msg %}
-    <div>
-      {% for error in msg %}
-        {% if error == 'Quantity entered for tyres must be equal to or greater than the number of wheels, and it must be an even value.' %}
-          <div>{{ error }}</div>
-        {% endif %}
-      {% endfor %}
-    </div>
-    {% endif %}
     <label for="armour">Armour:</label>
     <select name="armour">
       <option value="none">None</option>
@@ -134,24 +132,13 @@
     <input type="submit" class="button">
   </form>
 
-    {% if buggy_data %}
-    <h2>Generated Buggy Data:</h2>
-    <ul>
-      {% for key, value in buggy_data.items() %}
-      <li>{{ key }}: {{ value }}</li>
-      {% endfor %}
-    </ul>
-    {% endif %}
+{}
 
-    {% if total_cost %}
-    <h2>Total Cost: {{ total_cost }}</h2>
-    {% endif %}
-
-  <p>
-    <a href="/" class="button">Home</a>
-  </p>
-  <p>
-    <a href="/random" class="button">Generate a Random Buggy</a>
-  </p>
+<p>
+  <a href="/" class="button">Home</a>
+</p>
+<p>
+  <a href="/random" class="button">Generate a Random Buggy</a>
+</p>
 
 {% endblock %}
