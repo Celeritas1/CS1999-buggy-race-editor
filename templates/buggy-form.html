@@ -34,20 +34,19 @@
       margin-bottom: 20px;
       border: 1px solid #f5c6cb;
       border-radius: 4px;
+      display: inline-block;
     }
-    <style>
+
   .form-container {
     display: grid;
     gap: 20px;
     grid-template-columns: 1fr;
     max-width: 400px;
     margin: 0 auto;
-    align-items: flex-start;
   }
 
   .form-container label {
     margin-bottom: 5px;
-    text-align: left;
   }
 
   .form-container input,
@@ -56,7 +55,6 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 8px;
-    box-sizing: border-box;
   }
 
   .form-container select {
@@ -66,18 +64,6 @@
   .form-container select:hover {
     background-color: #ebebeb;
   }
-
-  .button-container {
-    display: flex;
-    justify-content: flex-start;
-    margin-top: 10px;
-  }
-
-  .button-container .button {
-    margin-right: 10px;
-  }
-</style>
-
 
     .form-container select:focus {
       outline: none;
@@ -134,11 +120,11 @@
 </head>
 
 <div class="main-content">
-  {% if random_buggy_validation_msg %}
-    <div class="error-messages">{{ random_buggy_validation_msg }}</div>
+  {% if  %}
+    <div class="error-messages">{{ msg }}</div>
   {% endif %}
 
-  <div class="header2">
+  <div class="header">
     <h1>Buggy Creation</h1>
   </div>
   <div class="header">
