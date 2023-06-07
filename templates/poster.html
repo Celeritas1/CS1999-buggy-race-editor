@@ -2,6 +2,17 @@
 {% block content %}
 
 <style>
+
+  .font {
+    color:#f7f7f7
+  }
+  .poster-tasks .task {
+    margin: 1em;
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+  }
 .poster-tasks {
   border-top: 1px solid black;
   margin-top: 4em;
@@ -21,19 +32,19 @@
   }
 
   .main-content {
-    color: rgb(255, 255, 255);
+    color: rgb(62, 61, 61);
     background-color: black;
   }
 
   .button {
-    background-color: rgb(242, 81, 181);
+    background-color: rgb(255, 119, 0);
     color: white;
     transition: background-color 0.7s, color 0.7s;
     margin-bottom: 100px;
   }
 
   .button:hover {
-    background-color: rgb(242, 81, 181);
+    background-color: rgb(255, 119, 0);
     color: rgb(239, 239, 239);
     transition: background-color 0.7s, color 0.7s;
   }
@@ -68,7 +79,7 @@
 
   .form-container select:focus {
     outline: none;
-    box-shadow: 0 0 4px rgb(242, 81, 181);
+    box-shadow: 0 0 4px rgb(255, 119, 0);
   }
 
   .header {
@@ -93,7 +104,7 @@
   .header h1 {
     color: white;
     text-align: center;
-    padding-top: 70px;
+    padding-top: 40px;
     font-size: 36px;
   }
 
@@ -102,20 +113,7 @@
     100% { transform: translateX(-100%); }
   }
 
-  .header2 {
-    text-align: center;
-    padding: 30px;
-    font-size: 24px;
-    font-weight: bold;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typewriterAnimation 4s steps(40) infinite;
-  }
 
-  @keyframes typewriterAnimation {
-    0% { width: 0; }
-    100% { width: 100%; }
-  }
   </style>
 </style>
 
@@ -135,14 +133,29 @@
   <div class="header h1">
    <h1> Welcome to my Buggy Editor.</h1>
   </div>
-<div class="header h1">
-  <p>
-    I believe I have made a viable system editor that allows users to easily navigate through and be able to create a buggy with little issue.</p>
-  <p>One of the first main features is the buggy creator subroutine itself. With it, there are many features that provide the user easy accessiblity and methods to automatically fill out required details with little effort. </p>
-  <p>One such example would be the dropdown menus that does not require the user to enter the specific power_type or attack option themeselves. This could risk spelling errors that simply prolong the form being submitted </p>
-</div>
 
+  <p class="button-container">
+    <a href="/" class="button">Home</a>
+  </p>
+
+  <div class="font">
+    <div class="header h1">
+    <h2>Buggy Creator Subroutine</h2>
+    </div>
+    <p>I believe I have made a viable system editor that allows users to easily navigate through and be able to create a buggy with little issue.</p>
+    <p>One of the first main features is the buggy creator subroutine itself. With it, there are many features that provide the user easy accessiblity fill out required details with little effort. </p>
+    <p>One such example would be the dropdown menus that does not require the user to enter the specific power_type or attack option themeselves. This could risk spelling errors that simply prolong the form being submitted </p>
+    <p>Before a buggy submission is committed to the database, there are several backgroumd subroutines running. One is the validation function which detemrines if the buggy options selected satisfy the game rules and if so, it will then be passed onto the calculation function. This determines the cost of the options chosen and will then finally commit to the desired database using SQL Query.</p>
+    <p> Another function I have is the Auto-Filling of empty input fields. My system has a preset in place to fill in all fields if necessary and for tests to be run with quick efficiency. This also acts as a way for users to easily make a buggy with a click of a button </p>
+    <p> Another function is my random buggy generator which in a way acts as another Auto-filing function that allows the user to easily create a buggy with random options with ease. I believe the phase of testing and accessbility has been achieved with this idea quite well</p>
+    <div class="header h1">
+    <h3>Buggy Records</h3>
+    </div>
+    <p>Another function is that my editor allows the user to review their last buggy save made. This is useful incase a developer or client would like to see their past buggies saved as well as simply view their buggy currently saved in the database. </p>
+    <p>Furthermore, this acts as a great testing mechanism for whenever a change is made to the buggy creating func, you can view if the details have successfully saved or not as it will past on this page.</p>
+  </div>
 </section>
+
 
 
 <section class="poster-tasks">
