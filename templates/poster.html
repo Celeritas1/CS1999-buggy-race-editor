@@ -98,7 +98,7 @@
     width: 100%;
     height: 100%;
     background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
-    animation: slidingBackgroundAnimation 20s linear infinite;
+    animation: slidingBackgroundAnimation 10s linear infinite;
   }
 
   .header h1 {
@@ -140,6 +140,7 @@
 
   <div class="font">
     <h2>Buggy Creator Subroutine</h2>
+    <div class="task"></div>
     <p>I believe I have made a viable system editor that allows users to easily navigate through and be able to create a buggy with little issue.</p>
     <p>One of the first main features is the buggy creator subroutine itself. With it, there are many features that provide the user easy accessiblity fill out required details with little effort. </p>
     <p>One such example would be the dropdown menus that does not require the user to enter the specific power_type or attack option themeselves. This could risk spelling errors that simply prolong the form being submitted </p>
@@ -149,6 +150,7 @@
     <h3>Buggy Records</h3>
     <p>Another function is that my editor allows the user to review their last buggy save made. This is useful incase a developer or client would like to see their past buggies saved as well as simply view their buggy currently saved in the database. </p>
     <p>Furthermore, this acts as a great testing mechanism for whenever a change is made to the buggy creating func, you can view if the details have successfully saved or not as it will past on this page.</p>
+    </div>
   </div>
 </section>
 
@@ -179,22 +181,6 @@
   
   
   <div class="task">
-    <h2>2-RULES: Add validation according to the game rules</h2>
-  
-    I implemented a count system and the rules all in its own subroutine. When a rule is satisfied, 1 will be added to the count and once all rules have been reached, then the options will then be committed to the database. If not, then error messages specified to the rule breached will be displayed to the user. It took some time but managed to implement and it works well.
-  
-  </div>
-  
-  
-  <div class="task">
-    <h2>2-COST: Calculate and save the game cost of the buggy</h2>
-  
-    Adding costs took a while to implement. With having to find a way on having the different costs available and implementing a solution that allows for easy update processes to be made such as adding or modifying an item and its costs. Therefore I passed a dictionary of each item costs into a calculate subroutine which returns the total cost depending on the selections made for the buggy. It successfully updates to the database and outputs the Total Cost within the buggy form
-  
-  </div>
-  
-  
-  <div class="task">
     <h2>1-TEMPLATE: Add a new template to the app</h2>
   
     I have practiced HTML for a few years since secondary for GCSE times. So handling this task was more of refreshing my memory of a few tags and was fairly easy to handle. I believe I completed the task to a satisfactory standard.
@@ -209,15 +195,7 @@
   
   </div>
   
-  
-  <div class="task">
-    <h2>0-GET: Get the source code</h2>
-  
-    It took a while setting up. A lot of applications and softwares i have not used before so i had to download and quickly adapt to it all. I believe i managed the task to a satisfactory level and completed it in good time.
-  
-  </div>
-  
-  
+   
   <div class="task">
     <h2>1-VALID: Add basic data validation</h2>
   
@@ -225,7 +203,12 @@
   
   </div>
   
+  <div class="task">
+    <h2>1-STYLE: Style your editor just how you like it</h2>
   
+    I decided to go quite basic as time was on short. I went with a basic black background but it gets more interesting with my CSS. I utilised some prior A-level practice with animation and managed to include a nice effect for my buttons with 'hover' and a 3D shadow for it. Furthermore, I then included a a animation for each page's title and it resonates well on each. Finally, I went with a fairly nice orange contrast for an accent for the sidebar as well as for for when hovering over the buttons. Overall I believe it can be developed further but does the job well enough.  
+  </div>
+
   <div class="task">
     <h2>2-EDIT: Edit the record by loading its current values into the form</h2>
   
@@ -239,6 +222,18 @@
   
     I have used HTML methods before to make my interface somewhat easier to view and browse. One such example would be the use of dropdown menus which I have utilised with most of my variables as they had many options per variable. I have successfully been able to implement and update the db with little issue. I have also managed to make changes to the error message being displayed as well as the GUI generally being brushed up with home buttons available 
   
+  </div>
+
+  <div class="task">
+    <h2> 2-COST: Calculate and save the game cost of the buggy</h2>
+  
+    Adding costs took a while to implement. With having to find a way on having the different costs available and implementing a solution that allows for easy update processes to be made such as adding or modifying an item and its costs. Therefore I passed a dictionary of each item costs into a calculate subroutine which returns the total cost depending on the selections made for the buggy. It successfully updates to the database and outputs the Total Cost within the buggy form  
+  </div>
+
+  <div class="task">
+    <h2>2-RULES: Add validation according to the game rules</h2>
+  
+    I implemented a count system and the rules all in its own subroutine. When a rule is satisfied, 1 will be added to the count and once all rules have been reached, then the options will then be committed to the database. If not, then error messages specified to the rule breached will be displayed to the user. It took some time but managed to implement and it works well.  
   </div>
   
   
