@@ -14,6 +14,121 @@
 .poster-tasks .task h2 {
   border-bottom: 3px solid gray;
 }
+<head>
+  <style>
+    .button-container {
+      display: flex;
+     justify-content:flex-start;
+      margin-top: 1px;
+    }
+
+    .main-content {
+      color: rgb(255, 255, 255);
+      background-color: black;
+    }
+
+    .button {
+      background-color: rgb(242, 81, 181);
+      color: white;
+      transition: background-color 0.7s, color 0.7s;
+      margin-bottom: 100px;
+    }
+
+    .button:hover {
+      background-color: rgb(242, 81, 181);
+      color: rgb(239, 239, 239);
+      transition: background-color 0.7s, color 0.7s;
+    }
+
+    .error-messages {
+      color: red;
+      background-color: #f8d7da;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+  .form-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  .form-container label {
+    margin-bottom: 5px;
+  }
+
+  .form-container input,
+  .form-container select {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+  }
+
+  .form-container select {
+    background-color: #f7f7f7;
+  }
+
+  .form-container select:hover {
+    background-color: #ebebeb;
+  }
+
+    .form-container select:focus {
+      outline: none;
+      box-shadow: 0 0 4px rgb(242, 81, 181);
+    }
+
+    .header {
+      background-image: url('header-background.jpg');
+      background-size: cover;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .header:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+      animation: slidingBackgroundAnimation 20s linear infinite;
+    }
+
+    .header h1 {
+      color: white;
+      text-align: center;
+      padding-top: 70px;
+      font-size: 36px;
+    }
+
+    @keyframes slidingBackgroundAnimation {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .header2 {
+      text-align: center;
+      padding: 30px;
+      font-size: 24px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typewriterAnimation 4s steps(40) infinite;
+    }
+
+    @keyframes typewriterAnimation {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+  </style>
 </style>
 
 <!-- Anything you want here: make it beautiful! make it appealing! make it clear! -->
@@ -28,21 +143,25 @@
 
 <!-- below this point keep this section tag and paste in a <div> for every        -->
 <!-- task you attempted.                                                          -->
+<section>
+  <div class="header h1">
+   <h1> Welcome to my Buggy Editor.</h1>
+  </div>
+<div class="header h1">
+  <h2>
+    I believe I have made a quite viable system editor that allows users to easily navigate through and be able to create a buggy with little issue.
+  </h2>
+</div>
+
+</section>
+
 
 <section class="poster-tasks">
 
 <div class="task">
   <h2>0-GET Get the source code</h2>
   <p>
-    I forked the repo on GitHub and then used <code>git clone</code> to make
-    a local copy.
-  </p>
-  <p>
-    Once the repo was on my own machine I was able to commit changes to
-    version control as I went along, and I pushed back up to my GitHub repo
-    at the end of each day. I followed GitHub's instructions and set up a
-    SSH key so I didn't need to enter username and password every time I
-    pushed.
+    It took a while setting up. A lot of applications and softwares i have not used before so i had to download and quickly adapt to it all. I believe i managed the task to a satisfactory level and completed it in good time.
   </p>
 </div>
 <div class="task">
