@@ -37,10 +37,11 @@ def random_buggy():
         flag_pattern_options = ['plain', 'spots', 'stripes']
         special_options = ['antibiotic','banging','fireproof','hamster_boosted','insulated']
 
-        qty_wheels = random.choice(range(2, 11, 2))
+        qty_wheels = [2, 4, 6, 8, 10]
+        qty_wheels_choice = random.choice(qty_wheels)
         power_type = random.choice(power_type_options)
         tyres = random.choice(tyres_options)
-        qty_tyres = random.randint(qty_wheels, qty_wheels + 10)
+        qty_tyres = random.randint(qty_wheels_choice, qty_wheels_choice + 10)
         armour = random.choice(armour_options)
         attack = random.choice(attack_options)
         algo = random.choice(algo_options)
@@ -50,7 +51,7 @@ def random_buggy():
         special = random.choice(special_options)
 
         buggy_data = {
-            'qty_wheels': qty_wheels,
+            'qty_wheels': qty_wheels_choice,
             'power_type': power_type,
             'tyres': tyres,
             'qty_tyres': qty_tyres,
@@ -232,7 +233,7 @@ def create_buggy():
             finally:
                 con.close()
         else:
-            msg = "Random buggy failed validation"
+            random_buggy_validation_msg = "Random buggy failed validation and therefore was not saved"
 
         return msg
 
@@ -289,7 +290,7 @@ def create_buggy():
     boolean_check = row[0] if row is not None else False
     count, error_messages, qty_wheels, power_type, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern = rules(qty_wheels, power_type, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern)
 
-    valid_check = bool(boolean_check or count == 6)
+    valid_check = bool(boolean_check or count == 7)
 
     if error_messages:
         msg = " ".join(error_messages)
@@ -331,8 +332,6 @@ def create_buggy():
     return render_template("updated.html", msg=msg)
 
     return "Invalid request method"
-
-
 
 
 
