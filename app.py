@@ -128,7 +128,7 @@ def create_buggy():
     def rules(qty_wheels, power_type, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern):
         count = 0
         error_messages = []
-
+     
         # Check for if qty_wheels and qty_tyres have values
         if not qty_wheels:
             error_messages.append("Quantity of wheels is required.")
@@ -232,10 +232,13 @@ def create_buggy():
                 msg = "Error in update operation: " + str(e)
             finally:
                 con.close()
+
+                return render_template("updated.html", msg=msg)
         else:
             random_buggy_validation_msg = "Random buggy failed validation and therefore was not saved"
 
         return msg
+    
 
     
     qty_wheels = request.form['qty_wheels']
