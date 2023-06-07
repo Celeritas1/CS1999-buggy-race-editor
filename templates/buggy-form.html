@@ -1,144 +1,293 @@
 {% extends "base.html" %}
 
 {% block content %}
+<head>
+  <style>
+    .button-container {
+      display: flex;
+     justify-content:flex-start;
+      margin-top: 1px;
+    }
 
-<style>
-  .main-content {
-    color: rgb(255, 255, 255);
-    background-color: black;
+    .main-content {
+      color: rgb(255, 255, 255);
+      background-color: black;
+    }
+
+    .button {
+      background-color: rgb(242, 81, 181);
+      color: white;
+      transition: background-color 0.7s, color 0.7s;
+      margin-bottom: 100px;
+    }
+
+    .button:hover {
+      background-color: rgb(242, 81, 181);
+      color: rgb(239, 239, 239);
+      transition: background-color 0.7s, color 0.7s;
+    }
+
+    .error-messages {
+      color: red;
+      background-color: #f8d7da;
+      padding: 10px;
+      margin-bottom: 20px;
+      border: 1px solid #f5c6cb;
+      border-radius: 4px;
+    }
+    <style>
+  .form-container {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: 1fr;
+    max-width: 400px;
+    margin: 0 auto;
+    align-items: flex-start;
   }
 
-  .button {
-    background-color: rgb(242, 81, 181);
-    color: white;
-    transition: background-color 0.7s, color 0.7s;
+  .form-container label {
+    margin-bottom: 5px;
+    text-align: left;
   }
 
-  .button:hover {
-    background-color: rgb(242, 81, 181);
-    color: rgb(239, 239, 239);
-    transition: background-color 0.7s, color 0.7s;
+  .form-container input,
+  .form-container select {
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    box-sizing: border-box;
   }
 
-  .error-messages {
-    color: red;
+  .form-container select {
+    background-color: #f7f7f7;
+  }
+
+  .form-container select:hover {
+    background-color: #ebebeb;
+  }
+
+  .button-container {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 10px;
+  }
+
+  .button-container .button {
+    margin-right: 10px;
   }
 </style>
 
-  <h1>Make buggy</h1>
 
-  <form action="/new" method="post">
-    <label for="qty_wheels">Number of wheels:</label>
-    <input type="text" name="qty_wheels" />
-    <label for="power_type">Power Type:</label>
-    <select name="power_type">
-      <option value="none">None</option>
-      <option value="electric">Electric</option>
-      <option value="fusion">Fusion</option>
-      <option value="hamster">Hamster</option>
-      <option value="bio">Bio</option>
-      <option value="petrol">Petrol</option>
-      <option value="rocket">Rocket</option>
-      <option value="solar">Solar</option>
-      <option value="steam">Steam</option>
-      <option value="thermo">Thermo</option>
-      <option value="wind">Wind</option>
-    </select>
-    <label for="tyres">Tyres:</label>
-    <select name="tyres">
-      <option value="knobbly">Knobbly</option>
-      <option value="maglev">Maglev</option>
-      <option value="reactive">Reactive</option>
-      <option value="slick">Slick</option>
-      <option value="steelbend">Steelbend</option>
-    </select>
-    <label for="qty_tyres">Qty Tyres:</label>
-    <input type="text" name="qty_tyres" />
-    <label for="armour">Armour:</label>
-    <select name="armour">
-      <option value="none">None</option>
-      <option value="aluminium">Aluminium</option>
-      <option value="thicksteel">Thicksteel</option>
-      <option value="thinsteel">Thinsteel</option>
-      <option value="titanium">Titanium</option>
-      <option value="wood">Wood</option>
-    </select>
-    <label for="attack">Attack:</label>
-    <select name="attack">
-      <option value="none">None</option>
-      <option value="charge">Charge</option>
-      <option value="flame">Flame</option>
-      <option value="biohazard">Biohazard</option>
-      <option value="spike">Spike</option>
-    </select>
-    <label for="algo">Algo:</label>
-    <select name="algo">
-      <option value="buggy">Buggy</option>
-      <option value="defensive">Defensive</option>
-      <option value="offensive">Offensive</option>
-      <option value="random">Random</option>
-      <option value="steady">Steady</option>
-      <option value="titfortat">Titfortat</option>
-    </select>
-    <label for="flag_color">Flag colour:</label>
-    <select name="flag_color">
-      <option value="red">Red</option>
-      <option value="blue">Blue</option>
-      <option value="green">Green</option>
-      <option value="orange">Orange</option>
-      <option value="black">Black</option>
-      <option value="white">White</option>
-      <option value="yellow">Yellow</option>
-      <option value="pink">Pink</option>
-      <option value="purple">Purple</option>
-      <option value="brown">Brown</option>
-      <option value="grey">Grey</option>
-      <option value="gold">Gold</option>
-      <option value="silver">Silver</option>
-    </select>
-    <label for="flag_color_sec">Flag Colour Secondary:</label>
-    <select name="flag_color_sec">
-      <option value="red">Red</option>
-      <option value="blue">Blue</option>
-      <option value="green">Green</option>
-      <option value="orange">Orange</option>
-      <option value="black">Black</option>
-      <option value="white">White</option>
-      <option value="yellow">Yellow</option>
-      <option value="pink">Pink</option>
-      <option value="purple">Purple</option>
-      <option value="brown">Brown</option>
-      <option value="grey">Grey</option>
-      <option value="gold">Gold</option>
-      <option value="silver">Silver</option>
-    </select>
-    <label for="flag_pattern">Flag Pattern:</label>
-    <select name="flag_pattern">
-      <option value="check">Chequered</option>
-      <option value="dstripe">Diagonal Striped</option>
-      <option value="hstripe">Horizontal Striped</option>
-      <option value="vstripe">Vertical Striped</option>
-      <option value="plain">Plain</option>
-      <option value="spot">Spotted</option>
-    </select>
-    <label for="special">Special:</label>
-    <select name="special">
-      <option value="antibiotic">Antibiotic</option>
-      <option value="banging">Banging</option>
-      <option value="fireproof">Fireproof</option>
-      <option value="hamster_boost">Hamster Boosted</option>
-      <option value="insulated">Insulated</option>
-    </select>
-    <input type="submit" class="button">
-  </form>
+    .form-container select:focus {
+      outline: none;
+      box-shadow: 0 0 4px rgb(242, 81, 181);
+    }
 
-{}
+    .header {
+      background-image: url('header-background.jpg');
+      background-size: cover;
+      height: 200px;
+      overflow: hidden;
+      position: relative;
+    }
 
-<p>
+    .header:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.8) 100%);
+      animation: slidingBackgroundAnimation 20s linear infinite;
+    }
+
+    .header h1 {
+      color: white;
+      text-align: center;
+      padding-top: 70px;
+      font-size: 36px;
+    }
+
+    @keyframes slidingBackgroundAnimation {
+      0% { transform: translateX(100%); }
+      100% { transform: translateX(-100%); }
+    }
+
+    .header2 {
+      text-align: center;
+      padding: 30px;
+      font-size: 24px;
+      font-weight: bold;
+      white-space: nowrap;
+      overflow: hidden;
+      animation: typewriterAnimation 4s steps(40) infinite;
+    }
+
+    @keyframes typewriterAnimation {
+      0% { width: 0; }
+      100% { width: 100%; }
+    }
+  </style>
+  </style>
+</head>
+
+<div class="main-content">
+  {% if random_buggy_validation_msg %}
+    <div class="error-messages">{{ random_buggy_validation_msg }}</div>
+  {% endif %}
+
+  <div class="header2">
+    <h1>Buggy Creation</h1>
+  </div>
+  <div class="header">
+    <h2>Welcome to the buggy creation page. Below you can select and opt to generate a viable buggy that can be entered into the race</h2>
+  </div>
+
+  <div class="form-container">
+    <form action="/new" method="post">
+      <label for="qty_wheels">Number of wheels:</label>
+      <input type="text" name="qty_wheels" id="qty_wheels" />
+
+      <label for="power_type">Power Type:</label>
+      <select name="power_type" id="power_type">
+        <option value="none">None</option>
+        <option value="electric">Electric</option>
+        <option value="fusion">Fusion</option>
+        <option value="hamster">Hamster</option>
+        <option value="bio">Bio</option>
+        <option value="petrol">Petrol</option>
+        <option value="rocket">Rocket</option>
+        <option value="solar">Solar</option>
+        <option value="steam">Steam</option>
+        <option value="thermo">Thermo</option>
+        <option value="wind">Wind</option>
+      </select>
+
+      <label for="tyres">Tyres:</label>
+      <select name="tyres" id="tyres">
+        <option value="knobbly">Knobbly</option>
+        <option value="maglev">Maglev</option>
+        <option value="reactive">Reactive</option>
+        <option value="slick">Slick</option>
+        <option value="steelbend">Steelbend</option>
+      </select>
+
+      <label for="qty_tyres">Qty Tyres:</label>
+      <input type="text" name="qty_tyres" id="qty_tyres" />
+
+      <label for="armour">Armour:</label>
+      <select name="armour" id="armour">
+        <option value="none">None</option>
+        <option value="aluminium">Aluminium</option>
+        <option value="thicksteel">Thicksteel</option>
+        <option value="thinsteel">Thinsteel</option>
+        <option value="titanium">Titanium</option>
+        <option value="wood">Wood</option>
+      </select>
+
+      <label for="attack">Attack:</label>
+      <select name="attack" id="attack">
+        <option value="none">None</option>
+        <option value="charge">Charge</option>
+        <option value="flame">Flame</option>
+        <option value="biohazard">Biohazard</option>
+        <option value="spike">Spike</option>
+      </select>
+
+      <label for="algo">Algo:</label>
+      <select name="algo" id="algo">
+        <option value="buggy">Buggy</option>
+        <option value="defensive">Defensive</option>
+        <option value="offensive">Offensive</option>
+        <option value="random">Random</option>
+        <option value="steady">Steady</option>
+        <option value="titfortat">Titfortat</option>
+      </select>
+
+      <label for="flag_color">Flag colour:</label>
+      <select name="flag_color" id="flag_color">
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="orange">Orange</option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+        <option value="yellow">Yellow</option>
+        <option value="pink">Pink</option>
+        <option value="purple">Purple</option>
+        <option value="brown">Brown</option>
+        <option value="grey">Grey</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+      </select>
+
+      <label for="flag_color_sec">Flag Colour Secondary:</label>
+      <select name="flag_color_sec" id="flag_color_sec">
+        <option value="red">Red</option>
+        <option value="blue">Blue</option>
+        <option value="green">Green</option>
+        <option value="orange">Orange</option>
+        <option value="black">Black</option>
+        <option value="white">White</option>
+        <option value="yellow">Yellow</option>
+        <option value="pink">Pink</option>
+        <option value="purple">Purple</option>
+        <option value="brown">Brown</option>
+        <option value="grey">Grey</option>
+        <option value="gold">Gold</option>
+        <option value="silver">Silver</option>
+      </select>
+
+      <label for="flag_pattern">Flag Pattern:</label>
+      <select name="flag_pattern" id="flag_pattern">
+        <option value="check">Chequered</option>
+        <option value="dstripe">Diagonal Striped</option>
+        <option value="hstripe">Horizontal Striped</option>
+        <option value="vstripe">Vertical Striped</option>
+        <option value="plain">Plain</option>
+        <option value="spot">Spotted</option>
+      </select>
+
+      <label for="special">Special:</label>
+      <select name="special" id="special">
+        <option value="antibiotic">Antibiotic</option>
+        <option value="banging">Banging</option>
+        <option value="fireproof">Fireproof</option>
+        <option value="hamster_boost">Hamster Boosted</option>
+        <option value="insulated">Insulated</option>
+      </select>
+
+      <div class="button-container">
+        <input type="submit" class="button" value="Create" />
+        <input type="button" class="button" value="Autofill" onclick="autofillValues()" />
+      </div>    
+    </form>
+  </div>
+</div>
+
+<p class="button-container">
   <a href="/" class="button">Home</a>
-</p>
-<p>
   <a href="/random" class="button">Generate a Random Buggy</a>
 </p>
+<script>
+  function autofillValues() {
+    document.getElementById("qty_wheels").value = "4";
+    document.getElementById("qty_tyres").value = "8";
+    document.getElementById("flag_color").value = "blue";
+    document.getElementById("flag_color_sec").value = "black";
+    document.getElementById("flag_pattern").value = "vstripe";
+    document.getElementById("power_type").value = "electric";
+    document.getElementById("tyres").value = "slick";
+    document.getElementById("armour").value = "thinsteel";
+    document.getElementById("attack").value = "flame";
+    document.getElementById("algo").value = "offensive";
+    document.getElementById("special").value = "banging";
+
+    return false;
+  }
+</script>
+
 
 {% endblock %}
