@@ -10,10 +10,10 @@ body {
   color: #000000;
   background: repeating-linear-gradient(
     45deg,
-    #ffffee,
-    #ffffee 2em,
-    #eeeeee 2em,
-    #eeeeee 4em
+    #090909,
+    #f53ec1 2em,
+    #020001 2em,
+    #fb47c5 4em
   );
 }
 .main-content {
