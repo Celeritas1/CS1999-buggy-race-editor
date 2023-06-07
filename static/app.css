@@ -39,8 +39,9 @@ a.button, input.button {
   box-shadow: 5px 5px 5px #999999;
 }
 a.button:hover {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: rgb(242, 81, 181);
+  color: rgb(239, 239, 239);
+  transition: background-color 0.7s, color 0.7s;
 }
 input {
   padding: 0.5em;

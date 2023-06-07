@@ -75,12 +75,15 @@ def create_buggy():
 
         qty_wheels = buggy_data['qty_wheels']
         power_type = buggy_data['power_type']
+        tyres = buggy_data['tyres']
         qty_tyres = buggy_data['qty_tyres']
+        armour = buggy_data['armour']
         attack = buggy_data['attack']
         algo = buggy_data['algo']
         flag_color = buggy_data['flag_color']
         flag_color_sec = buggy_data['flag_color_sec']
         flag_pattern = buggy_data['flag_pattern']
+        special = buggy_data['special']
 
          # Check for if qty_wheels and qty_tyres have values
         if not qty_wheels:
@@ -118,7 +121,7 @@ def create_buggy():
         if not error_messages:
             count = 7  # All checks passed
 
-        return count, error_messages, qty_wheels, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern
+        return count, error_messages, qty_wheels, power_type, tyres, qty_tyres, armour, attack, algo, flag_color, flag_color_sec, flag_pattern, special
 
     
     def rules(qty_wheels, power_type, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern):
@@ -161,7 +164,7 @@ def create_buggy():
         if not error_messages:
             count = 7  # All checks passed
 
-        return count, error_messages, qty_wheels, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern
+        return count, error_messages, qty_wheels, power_type, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern
 
 
     def calculate(qty_wheels, power_type, tyres, armour, attack, algo, special, costs):       
@@ -192,110 +195,140 @@ def create_buggy():
         msg = ""
         action = request.form.get('action')
         
-        if action == 'Generate Random Buggy':
-            buggy_data = random_buggy()
-            count, error_messages = validate_random_buggy(buggy_data) 
-            total_cost = calculate(buggy_data)
+    if action == 'Generate Random Buggy':
+        buggy_data = random_buggy()
+        count, error_messages, qty_wheels, power_type, tyres, qty_tyres, armour, attack, algo, flag_color, flag_color_sec, flag_pattern, special = validate_random_buggy(buggy_data) 
+        total_cost = calculate(buggy_data)
 
-            
-            if error_messages:
-                msg = " ".join(error_messages)
-                return render_template("buggy-form.html", error_messages=error_messages, msg=msg)
-            
-            return render_template("buggy-form.html", buggy_data=buggy_data, total_cost=total_cost)
-        
-        qty_wheels = request.form['qty_wheels']
-        power_type = request.form['power_type']
-        tyres = request.form['tyres']
-        qty_tyres = request.form['qty_tyres']
-        armour = request.form['armour']
-        attack = request.form['attack']
-        algo = request.form['algo']
-        flag_color = request.form['flag_color']
-        flag_color_sec = request.form['flag_color_sec']
-        flag_pattern = request.form['flag_pattern']
-        special = request.form['special']
-
-        costs = {
-            'bio': 5,
-            'electric': 20,
-            'fusion': 400,
-            'hamster': 3,
-            'none': 0,
-            'petrol': 4,
-            'rocket': 16,
-            'solar': 40,
-            'steam': 3,
-            'thermo': 300,
-            'wind': 20,
-            'knobbly': 15,
-            'maglev': 50,
-            'reactive': 40,
-            'slick': 10,
-            'steelbend': 20,
-            'aluminium': 200,
-            'thicksteel': 200,
-            'thinsteel': 100,
-            'titanium': 290,
-            'wood': 40,
-            'biohazard': 30,
-            'charge': 28,
-            'flame': 20,
-            'spike': 5,
-            'antibiotic': 90,
-            'banging': 42,
-            'fireproof': 70,
-            'hamster_booster': 5,
-            'insulated': 100
-            }
-
-        connection = sql.connect(DATABASE_FILE)
-        cursor = connection.cursor()
-        cursor.execute("SELECT valid_check FROM buggies WHERE id = ?", (DEFAULT_BUGGY_ID,))
-        row = cursor.fetchone()
-        boolean_check = row[0] if row is not None else False
-        count, error_messages, qty_wheels, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern, _ = rules(qty_wheels, power_type, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern)
-
-        valid_check = bool(boolean_check or count == 6)
-
-        if error_messages:
-            msg = " ".join(error_messages)
-            return render_template("buggy-form.html", error_messages=error_messages, msg=msg)
-
-        total_cost = calculate(qty_wheels, power_type, tyres, armour, attack, algo, special, costs)
-
-        try:
-            with sql.connect(DATABASE_FILE) as con:
-                cur = con.cursor()
-                cur.execute(
-                    "UPDATE buggies SET qty_wheels=?, power_type=?, tyres=?, qty_tyres=?, armour=?, attack=?, algo=?, flag_color=?, flag_color_sec=?, flag_pattern=?, special=?, total_cost=?, valid_check=? WHERE id=?",
-                    (
-                        qty_wheels,
-                        power_type,
-                        tyres,
-                        qty_tyres,
-                        armour,
-                        attack,
-                        algo,
-                        flag_color,
-                        flag_color_sec,
-                        flag_pattern,
-                        special,
-                        total_cost,
-                        valid_check,
-                        DEFAULT_BUGGY_ID
+        if count == 7:  # All checks passed
+            # Update the database with the random buggy data
+            try:
+                with sql.connect(DATABASE_FILE) as con:
+                    cur = con.cursor()
+                    cur.execute(
+                        "UPDATE buggies SET qty_wheels=?, power_type=?, tyres=?, qty_tyres=?, armour=?, attack=?, algo=?, flag_color=?, flag_color_sec=?, flag_pattern=?, special=?, valid_check=?, total_cost=? WHERE id=?",
+                        (
+                            qty_wheels,
+                            power_type,
+                            tyres,
+                            qty_tyres,
+                            armour,
+                            attack,
+                            algo,
+                            flag_color,
+                            flag_color_sec,
+                            flag_pattern,
+                            special,
+                            True,  # Set valid_check to True
+                            total_cost,
+                            DEFAULT_BUGGY_ID
+                        )
                     )
+                    con.commit()
+                    msg = "Random buggy successfully updated in the database"
+            except Exception as e:
+                con.rollback()
+                msg = "Error in update operation: " + str(e)
+            finally:
+                con.close()
+        else:
+            msg = "Random buggy failed validation"
+
+        return msg
+
+    
+    qty_wheels = request.form['qty_wheels']
+    power_type = request.form['power_type']
+    tyres = request.form['tyres']
+    qty_tyres = request.form['qty_tyres']
+    armour = request.form['armour']
+    attack = request.form['attack']
+    algo = request.form['algo']
+    flag_color = request.form['flag_color']
+    flag_color_sec = request.form['flag_color_sec']
+    flag_pattern = request.form['flag_pattern']
+    special = request.form['special']
+
+    costs = {
+        'bio': 5,
+        'electric': 20,
+        'fusion': 400,
+        'hamster': 3,
+        'none': 0,
+        'petrol': 4,
+        'rocket': 16,
+        'solar': 40,
+        'steam': 3,
+        'thermo': 300,
+        'wind': 20,
+        'knobbly': 15,
+        'maglev': 50,
+        'reactive': 40,
+        'slick': 10,
+        'steelbend': 20,
+        'aluminium': 200,
+        'thicksteel': 200,
+        'thinsteel': 100,
+        'titanium': 290,
+        'wood': 40,
+        'biohazard': 30,
+        'charge': 28,
+        'flame': 20,
+        'spike': 5,
+        'antibiotic': 90,
+        'banging': 42,
+        'fireproof': 70,
+        'hamster_booster': 5,
+        'insulated': 100
+        }
+
+    connection = sql.connect(DATABASE_FILE)
+    cursor = connection.cursor()
+    cursor.execute("SELECT valid_check FROM buggies WHERE id = ?", (DEFAULT_BUGGY_ID,))
+    row = cursor.fetchone()
+    boolean_check = row[0] if row is not None else False
+    count, error_messages, qty_wheels, power_type, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern = rules(qty_wheels, power_type, qty_tyres, attack, algo, flag_color, flag_color_sec, flag_pattern)
+
+    valid_check = bool(boolean_check or count == 6)
+
+    if error_messages:
+        msg = " ".join(error_messages)
+        return render_template("buggy-form.html", error_messages=error_messages, msg=msg)
+
+    total_cost = calculate(qty_wheels, power_type, tyres, armour, attack, algo, special, costs)
+
+    try:
+        with sql.connect(DATABASE_FILE) as con:
+            cur = con.cursor()
+            cur.execute(
+                "UPDATE buggies SET qty_wheels=?, power_type=?, tyres=?, qty_tyres=?, armour=?, attack=?, algo=?, flag_color=?, flag_color_sec=?, flag_pattern=?, special=?, total_cost=?, valid_check=? WHERE id=?",
+                (
+                    qty_wheels,
+                    power_type,
+                    tyres,
+                    qty_tyres,
+                    armour,
+                    attack,
+                    algo,
+                    flag_color,
+                    flag_color_sec,
+                    flag_pattern,
+                    special,
+                    total_cost,
+                    valid_check,
+                    DEFAULT_BUGGY_ID
                 )
+            )
 
-                con.commit()
-                msg = "Record successfully saved"
-        except Exception as e:
-            con.rollback()
-            msg = "Error in update operation: " + str(e)
-        finally:
-            con.close()
+            con.commit()
+            msg = "Record successfully saved"
+    except Exception as e:
+        con.rollback()
+        msg = "Error in update operation: " + str(e)
+    finally:
+        con.close()
 
-        return render_template("updated.html", msg=msg)
+    return render_template("updated.html", msg=msg)
 
     return "Invalid request method"
 

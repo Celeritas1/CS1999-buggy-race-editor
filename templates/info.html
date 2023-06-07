@@ -2,7 +2,30 @@
 
 {% block content %}
 <head>
+
     <style>
+        .main-content {
+          color: rgb(255, 255, 255);
+          background-color: black;
+        }
+      
+        .button {
+          background-color: rgb(242, 81, 181);
+          color: white;
+          transition: background-color 0.7s, color 0.7s;
+        }
+      
+        .button:hover {
+          background-color: rgb(242, 81, 181);
+          color: rgb(239, 239, 239);
+          transition: background-color 0.7s, color 0.7s;
+        }
+      
+        .error-messages {
+          color: red;
+        }
+      
+    
         table {
             border-collapse: collapse;
             
@@ -11,6 +34,8 @@
             border: 1px solid black;
             padding: 8px;
             text-align: left;
+
+        
         }
     </style>
 </head>
